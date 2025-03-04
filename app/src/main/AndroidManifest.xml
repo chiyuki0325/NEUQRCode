@@ -29,7 +29,9 @@
         <activity android:name=".activities.LoginActivity" />
         <activity android:name=".activities.ImportCoursesActivity" />
         <activity android:name=".activities.TermsOfServiceActivity" />
-        <activity android:name=".activities.ErrorActivity" />
+        <activity 
+            android:name=".activities.ErrorActivity"
+            android:launchMode="singleTask" />
     </application>
 
 </manifest>
