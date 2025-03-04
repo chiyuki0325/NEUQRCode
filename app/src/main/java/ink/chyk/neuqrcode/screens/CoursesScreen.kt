@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.*
 import androidx.compose.ui.res.*
 import androidx.compose.ui.text.*
 import androidx.compose.ui.text.font.*
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.*
 import androidx.compose.ui.window.*
 import androidx.navigation.*
@@ -189,8 +190,10 @@ fun TodayCoursesList(
       ) {
         Row(
           verticalAlignment = Alignment.CenterVertically,
+          modifier = Modifier.weight(1f)
         ) {
-          Column {
+          // 保持课程时间宽度固定
+          Column(modifier = Modifier.width(IntrinsicSize.Min)) {
             Text(it.start)
             Text(it.end)
           }
@@ -203,17 +206,23 @@ fun TodayCoursesList(
             color = Color(viewModel.calcCourseColor(it.name, dark))
           ) {}
           Spacer(modifier = Modifier.width(8.dp))
-          Column {
+          // 使用剩余权重，截断多余文本，显示省略号
+          Column(modifier = Modifier.weight(1f)) {
             Text(
               Pangu.spacingText(it.name),
-              style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp)
+              style = TextStyle(fontWeight = FontWeight.Bold, fontSize = 20.sp),
+              maxLines = 1,
+              overflow = TextOverflow.Ellipsis
             )
             Text(
               locationToAnnotated(it.location),
-              style = MaterialTheme.typography.bodyMedium
+              style = MaterialTheme.typography.bodyMedium,
+              maxLines = 1,
+              overflow = TextOverflow.Ellipsis
             )
           }
         }
+        Spacer(modifier = Modifier.width(8.dp))
         Icon(
           painter = painterResource(icon),
           contentDescription = "Time Delimeter",

@@ -4,6 +4,7 @@ import android.content.*
 import android.os.*
 import android.util.*
 import android.widget.*
+import android.app.ActivityManager
 import androidx.activity.*
 import androidx.activity.compose.*
 import androidx.compose.animation.*
@@ -143,9 +144,21 @@ fun exit(
 fun MainApp(screen: String?) {
   val ctx = LocalContext.current
   val onFailed = {
-    // TODO: jump to error screen
-    val intent = Intent(ctx, ErrorActivity::class.java)
-    ctx.startActivity(intent)
+    // 检查应用是否在前台
+    val activityManager = ctx.getSystemService(Context.ACTIVITY_SERVICE) as ActivityManager
+    val appProcesses = activityManager.runningAppProcesses ?: emptyList()
+    val isAppInForeground = appProcesses.any {
+      it.importance == ActivityManager.RunningAppProcessInfo.IMPORTANCE_FOREGROUND &&
+              it.processName == ctx.packageName
+    }
+
+    // 只有在前台时才显示错误，防止锁屏或者后台
+    if (isAppInForeground) {
+      val intent = Intent(ctx, ErrorActivity::class.java)
+      intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+      ctx.startActivity(intent)
+    }
+    
     true
   }
   val eCodeViewModel: ECodeViewModel = viewModel(factory = ECodeViewModelFactory(onFailed))
