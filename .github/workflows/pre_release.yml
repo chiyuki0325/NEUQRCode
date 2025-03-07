@@ -2,10 +2,11 @@ name: Android CI
 
 on:
   push:
-    tags-ignore:
-      - 'v*'
     branches:
-      - '*'
+      - "*"
+    tags:
+      - "*"
+      - "!v*"
   pull_request:
 
 jobs:
@@ -51,7 +52,7 @@ jobs:
           echo ${{ secrets.GRADLE_PROPERTIES}} | base64 --decode >> gradle.properties
 
       - name: Build with Gradle
-        run: ./gradlew assembleDebug assembleRelease
+        run: ./gradlew :app:assembleRelease
 
       - name: Upload Artifact (Release)
         uses: actions/upload-artifact@v4
