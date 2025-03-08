@@ -25,12 +25,7 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 21
-          distribution: temurin
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-        with:
-          log-accepted-android-sdk-licenses: false   
+          distribution: temurin 
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -41,7 +36,7 @@ jobs:
             echo ${{ secrets.GRADLE_PROPERTIES}} | base64 --decode >> gradle.properties
 
       - name: Build with Gradle
-        run: ./gradlew :app:assembleRelease
+        run: ./gradlew assembleRelease
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
