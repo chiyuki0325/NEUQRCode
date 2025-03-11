@@ -29,7 +29,7 @@ fun getGitDescribe(): String {
         commandLine("git", "describe", "--tags", "--always", "--exclude", "beta")
         standardOutput = out
     }
-    return out.toString().trim().removePrefix("v")
+    return out.toString().trim()
 }
 
 fun getAppVersionCode(): Int {
