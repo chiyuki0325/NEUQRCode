@@ -74,12 +74,20 @@ class AppsViewModel(
     R.string.run_t5_5
   )
 
+  private var _appCardsOrder = MutableStateFlow(getAppCardsOrder())
+  val appCardsOrder: StateFlow<List<String>> = _appCardsOrder
+
   fun getAppCardsOrder(): List<String> {
     return mmkv.decodeString("app_cards_order")?.split(",") ?: listOf(
       "campus_run",
       "mail_box",
       "deep_seek"
     )
+  }
+
+  fun setAppCardsOrder(order: List<String>) {
+    mmkv.encode("app_cards_order", order.joinToString(","))
+    _appCardsOrder.value = order
   }
 
   fun initCampusRun() {

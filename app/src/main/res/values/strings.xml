@@ -152,4 +152,6 @@
     <string name="generate_failed_unknown_server">生成失败，未知的服务器错误。</string>
     <string name="deepseek">DeepSeek</string>
     <string name="deepseek_description">校园智能问答助手</string>
+    <string name="sort_apps">调整应用顺序</string>
+    <string name="done">完成</string>
 </resources>
