@@ -1,6 +1,7 @@
 package ink.chyk.neuqrcode.screens
 
 import android.content.*
+import android.util.Log
 import androidx.compose.animation.*
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.*
@@ -146,12 +147,17 @@ fun CoursesCardOuter(
     nextDate = viewModel.nextDay(currentDate)
   }
 
+  var animating by remember { mutableStateOf(false) }
+
   val dragModifier = Modifier.draggable(
     orientation = Orientation.Horizontal,
     state = rememberDraggableState { delta ->
       offsetX += delta
     },
+    enabled = !animating,
     onDragStopped = { velocity ->
+      Log.d("CoursesScreen", "Drag Stopped")
+
       val target = when {
         offsetX < -widthPx / 5 -> -widthPx
         offsetX > widthPx / 5 -> widthPx
@@ -159,22 +165,19 @@ fun CoursesCardOuter(
       }
 
       scope.launch {
+        animating = true
+
         animate(
           initialValue = offsetX,
           targetValue = target,
-          /*
-          animationSpec = spring(
-            dampingRatio = Spring.DampingRatioMediumBouncy,
-            stiffness = Spring.StiffnessMedium
-          )
-          */
-          animationSpec = tween(durationMillis = 300)
+          animationSpec = tween(durationMillis = 200)
         ) { value, _ -> offsetX = value }
 
         if (target != 0f) {
           val newDate = if (target < 0) nextDate else prevDate
           dateState.value = newDate
         }
+        animating = false
       }
     }
   )
@@ -540,7 +543,11 @@ fun NoCoursesSplash(dateId: String) {
   ) {
     Image(
       painter = painterResource(
-        listOf(R.drawable.neko1, R.drawable.neko2, R.drawable.neko3)[dateId.hashCode().absoluteValue % 3]
+        listOf(
+          R.drawable.neko1,
+          R.drawable.neko2,
+          R.drawable.neko3
+        )[dateId.hashCode().absoluteValue % 3]
       ),
       contentDescription = "No Courses",
       modifier = Modifier
