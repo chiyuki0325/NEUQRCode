@@ -74,6 +74,14 @@ class AppsViewModel(
     R.string.run_t5_5
   )
 
+  fun getAppCardsOrder(): List<String> {
+    return mmkv.decodeString("app_cards_order")?.split(",") ?: listOf(
+      "campus_run",
+      "mail_box",
+      "deep_seek"
+    )
+  }
+
   fun initCampusRun() {
     viewModelScope.launch {
       withContext(Dispatchers.IO) {
@@ -169,5 +177,11 @@ class AppsViewModel(
         Toast.makeText(context, R.string.error_open_coremail, Toast.LENGTH_SHORT).show()
       }
     }
+  }
+
+  fun openDeepSeek(context: Context) {
+    // 进入 DeepSeek
+    val intent = Intent(context, DeepSeekActivity::class.java)
+    context.startActivity(intent)
   }
 }

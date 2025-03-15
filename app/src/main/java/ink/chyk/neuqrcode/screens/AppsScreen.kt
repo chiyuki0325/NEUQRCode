@@ -42,14 +42,12 @@ fun AppsScreen(
     LazyColumn {
       item {
         AppsHeader()
-        Spacer(modifier = Modifier.height(16.dp))
       }
-      item {
-        CampusRunCard(viewModel)
-      }
-      item {
-        Spacer(modifier = Modifier.height(16.dp))
-        MailBoxCard(viewModel)
+      viewModel.getAppCardsOrder().forEach {
+        item {
+          Spacer(modifier = Modifier.height(16.dp))
+          AppCard(it, viewModel)
+        }
       }
     }
   }
@@ -70,6 +68,15 @@ fun AppsHeader() {
   Spacer(modifier = Modifier.height(16.dp))
 }
 
+@ExperimentalSerializationApi
+@Composable
+fun AppCard(key: String, viewModel: AppsViewModel) {
+  when (key) {
+    "campus_run" -> CampusRunCard(viewModel)
+    "mail_box" -> MailBoxCard(viewModel)
+    "deep_seek" -> DeepSeekCard(viewModel)
+  }
+}
 
 @ExperimentalSerializationApi
 @Composable
@@ -414,7 +421,7 @@ fun MailItem(
 ) {
   // 在一行内 显示subject和from（减淡颜色）
   // 溢出的话显示省略号
-  Row (
+  Row(
     verticalAlignment = Alignment.CenterVertically,
   ) {
     // 和课表类似，根据邮件主题计算颜色
@@ -439,5 +446,68 @@ fun MailItem(
       maxLines = 1,
       overflow = TextOverflow.Ellipsis,
     )
+  }
+}
+
+@ExperimentalSerializationApi
+@Composable
+fun DeepSeekCard(
+  viewModel: AppsViewModel
+) {
+  val context = LocalContext.current
+
+  Card {
+    Column(
+      modifier = Modifier
+        .padding(16.dp)
+        .fillMaxWidth(),
+    ) {
+      Row(
+        verticalAlignment = Alignment.CenterVertically,
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+      ) {
+        // DeepSeek 图标
+        Icon(
+          painter = painterResource(R.drawable.deepseek),
+          contentDescription = null,
+          modifier = Modifier.size(48.dp),
+        )
+        Column(
+          modifier = Modifier.weight(1f),
+        ) {
+          // DeepSeek 标题
+          Text(
+            stringResource(R.string.deepseek),
+            fontSize = 20.sp,
+            fontWeight = FontWeight.Bold
+          )
+          // DeepSeek 描述
+          Text(
+            stringResource(R.string.deepseek_description),
+            color = MaterialTheme.colorScheme.onSurface,
+            fontSize = 15.sp,
+          )
+        }
+        IconButton(
+          onClick = {
+            // 进入 DeepSeek 按钮
+            viewModel.openDeepSeek(context)
+          },
+          colors = IconButtonColors(
+            contentColor = MaterialTheme.colorScheme.onPrimary,
+            containerColor = MaterialTheme.colorScheme.primary,
+            disabledContentColor = MaterialTheme.colorScheme.onSecondary,
+            disabledContainerColor = MaterialTheme.colorScheme.secondary,
+          ),
+          modifier = Modifier.size(48.dp)
+        ) {
+          Icon(
+            painter = painterResource(id = R.drawable.ic_fluent_send_32_regular),
+            contentDescription = null,
+            modifier = Modifier.height(32.dp),
+          )
+        }
+      } // 第一行结束
+    }
   }
 }

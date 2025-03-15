@@ -39,6 +39,7 @@
         <activity android:name=".activities.SettingsActivity" />
         <activity android:name=".activities.CampusRunningActivity" />
         <activity android:name=".activities.WebPageActivity" />
+        <activity android:name=".activities.DeepSeekActivity" />
 
         <service
             android:name="com.tencent.smtt.export.external.DexClassLoaderProviderService"
