@@ -41,13 +41,13 @@ class NEUPass(
     // 登录账号，依次尝试每个 API
     // mobile -> web -> mobileLegacy
 
-    try {
-      return loginPortalTicketMobile(studentId, password)
+    return try {
+      loginPortalTicketWeb(studentId, password)
     } catch (e: PasswordIncorrectException) {
       throw e
     } catch (_: Exception) {
       return try {
-        loginPortalTicketWeb(studentId, password)
+        return loginPortalTicketMobile(studentId, password)
       } catch (e: PasswordIncorrectException) {
         throw e
       } catch (_: Exception) {
@@ -56,7 +56,7 @@ class NEUPass(
     }
   }
 
-  suspend fun loginPortalTicketMobile(studentId: String, password: String): String {
+  private suspend fun loginPortalTicketMobile(studentId: String, password: String): String {
     // 登录账号（智慧东大 3.x API）
     val url = "https://personal.neu.edu.cn/prize/Front/Oauth/User/sso"
 
@@ -93,7 +93,7 @@ class NEUPass(
     }
   }
 
-  suspend fun loginPortalTicketMobileLegacy(studentId: String, password: String): String {
+  private suspend fun loginPortalTicketMobileLegacy(studentId: String, password: String): String {
     // 登录账号（只会东大 2.x API，作为回退）
 
     val url = "https://portal.neu.edu.cn/mobile/api/auth/tickets"
@@ -130,7 +130,7 @@ class NEUPass(
     }
   }
 
-  suspend fun loginPortalTicketWeb(studentId: String, password: String): String {
+  private suspend fun loginPortalTicketWeb(studentId: String, password: String): String {
     // 登录账号（web 统一身份认证接口）
     // credits: https://github.com/neucn/neugo
 
