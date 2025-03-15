@@ -132,16 +132,21 @@ fun enter(
   previousItem: Int = 0,
   selectedItem: Int = 0
 ): EnterTransition {
-  val time = log2((abs(previousItem - selectedItem) + 1).toFloat()).toInt() * 300
   return if (previousItem < selectedItem) {
     slideInHorizontally(
       initialOffsetX = { it },
-      animationSpec = tween(durationMillis = time)
+      animationSpec = spring(
+        dampingRatio = Spring.DampingRatioNoBouncy,
+        stiffness = Spring.StiffnessMedium
+      )
     )
   } else {
     slideInHorizontally(
       initialOffsetX = { -it },
-      animationSpec = tween(durationMillis = time)
+      animationSpec = spring(
+        dampingRatio = Spring.DampingRatioNoBouncy,
+        stiffness = Spring.StiffnessMedium
+      )
     )
   }
 }
@@ -150,16 +155,21 @@ fun exit(
   previousItem: Int = 0,
   selectedItem: Int = 0
 ): ExitTransition {
-  val time = log2((abs(previousItem - selectedItem) + 1).toFloat()).toInt() * 300
   return if (previousItem < selectedItem) {
     slideOutHorizontally(
       targetOffsetX = { -it },
-      animationSpec = tween(durationMillis = time)
+      animationSpec = spring(
+        dampingRatio = Spring.DampingRatioNoBouncy,
+        stiffness = Spring.StiffnessMedium
+      )
     )
   } else {
     slideOutHorizontally(
       targetOffsetX = { it },
-      animationSpec = tween(durationMillis = time)
+      animationSpec = spring(
+        dampingRatio = Spring.DampingRatioNoBouncy,
+        stiffness = Spring.StiffnessMedium
+      )
     )
   }
 }
