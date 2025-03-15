@@ -108,7 +108,7 @@ class CampusRun(
       campusRunTicket = neu.loginNEUAppTicket(portalTicket, callbackUrl)
     } catch (e: Exception) {
       when (e) {
-        is TicketFailedException, is TicketExpiredException -> {
+        is TicketFailedException -> {
           portalTicket = getPortalTicket(true)  // 过期了 重新登录
           campusRunTicket = neu.loginNEUAppTicket(portalTicket, callbackUrl)
         }
