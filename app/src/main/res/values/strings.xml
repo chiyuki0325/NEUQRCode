@@ -37,15 +37,6 @@
     <string name="found_latest_release">发现新版本：%1$s</string>
     <string name="releases_url">https://github.com/chiyuki0325/NEUQRCode/releases/latest</string>
     <string name="checking_update">正在检查更新…</string>
-    <string name="message_center">智慧东大消息中心</string>
-    <string name="unread">全部未读</string>
-    <string name="notice">个人通知</string>
-    <string name="tasks">待办事务</string>
-    <string name="neu1">校内通知</string>
-    <string name="neu2">东大要闻</string>
-    <string name="neu3">媒体东大</string>
-    <string name="no_message_in_category">该分类下暂无消息…</string>
-    <string name="message_detail">消息详情</string>
     <string name="tos_title">用前须知</string>
     <string name="tos_read_carefully">以下为本 App 的用前须知。请仔细阅读，并勾选下面的复选框。</string>
     <string name="tos_v220">
@@ -154,4 +145,5 @@
     <string name="deepseek_description">校园智能问答助手</string>
     <string name="sort_apps">调整应用顺序</string>
     <string name="done">完成</string>
+    <string name="neu_deepseek">NEU DeepSeek</string>
 </resources>
