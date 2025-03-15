@@ -117,9 +117,9 @@ fun CampusRunCard(
           // 当前学期名字 或者 加载失败字样
           Text(
             when (loadingState.value) {
-              AppsViewModel.LoadingState.LOADING -> stringResource(R.string.loading)
-              AppsViewModel.LoadingState.FAILED -> stringResource(R.string.no_network)
-              AppsViewModel.LoadingState.SUCCESS -> termName.value
+              LoadingState.LOADING -> stringResource(R.string.loading)
+              LoadingState.FAILED -> stringResource(R.string.no_network)
+              LoadingState.SUCCESS -> termName.value
                 // 略加修改
                 .replace("~", " ~ ")
                 .replace("学年", "").let {
@@ -131,7 +131,7 @@ fun CampusRunCard(
           )
         }
         IconButton(
-          enabled = loadingState.value == AppsViewModel.LoadingState.SUCCESS,
+          enabled = loadingState.value == LoadingState.SUCCESS,
           onClick = {
             // 进入乐跑按钮
             viewModel.startCampusRun(context)
@@ -152,7 +152,7 @@ fun CampusRunCard(
         }
       } // 第一行结束
 
-      if (loadingState.value == AppsViewModel.LoadingState.SUCCESS) {
+      if (loadingState.value == LoadingState.SUCCESS) {
         // 成功之后绘制剩余的内容
         val fontSize = 15.sp
 
@@ -323,7 +323,7 @@ fun MailBoxCard(
         Icon(
           painter = painterResource(
             if (
-              mailList.value?.num != "0" && loadingState.value == AppsViewModel.LoadingState.SUCCESS
+              mailList.value?.num != "0" && loadingState.value == LoadingState.SUCCESS
             ) {
               R.drawable.ic_fluent_mail_unread_48_regular
             } else {
@@ -345,15 +345,15 @@ fun MailBoxCard(
           // 邮箱数量
           Text(
             text = when (loadingState.value) {
-              AppsViewModel.LoadingState.LOADING -> buildAnnotatedString {
+              LoadingState.LOADING -> buildAnnotatedString {
                 append(stringResource(R.string.loading))
               }
 
-              AppsViewModel.LoadingState.FAILED -> buildAnnotatedString {
+              LoadingState.FAILED -> buildAnnotatedString {
                 append(stringResource(R.string.no_network))
               }
 
-              AppsViewModel.LoadingState.SUCCESS -> {
+              LoadingState.SUCCESS -> {
                 buildAnnotatedString {
                   withStyle(SpanStyle(fontWeight = FontWeight.Bold)) {
                     append(mailList.value?.num)
@@ -378,7 +378,7 @@ fun MailBoxCard(
             disabledContainerColor = MaterialTheme.colorScheme.secondary,
           ),
           modifier = Modifier.size(48.dp),
-          enabled = loadingState.value == AppsViewModel.LoadingState.SUCCESS,
+          enabled = loadingState.value == LoadingState.SUCCESS,
         ) {
           Icon(
             painter = painterResource(id = R.drawable.ic_fluent_mail_read_32_regular),

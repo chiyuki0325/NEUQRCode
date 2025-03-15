@@ -127,7 +127,7 @@ class CampusRun(
       .header("User-Agent", neu.userAgent ?: "NEUQRCode")
       .build()
 
-    val res1 = Utilities.executeRequest(client, req1, "登录步道乐跑失败")
+    val res1 = Utils.executeRequest(client, req1, "登录步道乐跑失败")
 
     if (res1.code != 302) {
       Log.d("CampusRun", "Not 302: ${res1.code}")
@@ -139,7 +139,7 @@ class CampusRun(
       .header("Cookie", "Path=/; PHPSESSID=$campusRunTicket")
       .build()
 
-    val res2 = Utilities.executeRequest(client, req2, "登录步道乐跑失败")
+    val res2 = Utils.executeRequest(client, req2, "登录步道乐跑失败")
 
     val location =
       res2.header("Location") ?: throw RequestFailedException("登录步道乐跑失败: 无法获取 Location")
@@ -217,7 +217,7 @@ class CampusRun(
       .post(requestBody)
       .build()
 
-    val response = Utilities.executeRequest(client, request, "请求步道乐跑 API 失败")
+    val response = Utils.executeRequest(client, request, "请求步道乐跑 API 失败")
 
     val responseBody = response.body?.string()
       ?: throw RequestFailedException("请求步道乐跑 API 失败: 无法获取响应体")

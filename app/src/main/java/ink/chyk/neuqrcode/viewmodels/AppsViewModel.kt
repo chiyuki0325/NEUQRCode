@@ -6,6 +6,7 @@ import android.widget.*
 import androidx.compose.ui.graphics.*
 import androidx.lifecycle.*
 import com.tencent.mmkv.*
+import ink.chyk.neuqrcode.LoadingState
 import ink.chyk.neuqrcode.R
 import ink.chyk.neuqrcode.activities.*
 import ink.chyk.neuqrcode.neu.*
@@ -22,13 +23,6 @@ class AppsViewModel(
 ) : PersonalViewModel(
   neu, mmkv
 ) {
-
-  enum class LoadingState {
-    LOADING,
-    SUCCESS,
-    FAILED
-  }
-
   // 加载状态：步道乐跑
   private var _campusRunState = MutableStateFlow(LoadingState.LOADING)
   val campusRunState: StateFlow<LoadingState> = _campusRunState

@@ -186,7 +186,7 @@ fun MainApp(screen: String?) {
 
     true
   }
-  val eCodeViewModel: ECodeViewModel = viewModel(factory = ECodeViewModelFactory(onFailed))
+  val eCodeViewModel: ECodeViewModel = viewModel(factory = ECodeViewModelFactory())
   val profileViewModel: ProfileViewModel = viewModel(factory = ProfileViewModelFactory(onFailed))
   val coursesViewModel: CoursesViewModel = viewModel(factory = CoursesViewModelFactory())
   val appsViewModel: AppsViewModel = viewModel(factory = AppsViewModelFactory({ false }))

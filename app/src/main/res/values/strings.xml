@@ -147,4 +147,7 @@
     <string name="args_error">参数错误</string>
     <string name="args_error_content">请不要尝试使用 Activity Launcher 等工具调试本 App。</string>
     <string name="recharge">充值和缴费</string>
+    <string name="generate_time">生成时间：%1$s</string>
+    <string name="generate_failed_network">生成失败，请检查网络连接。</string>
+    <string name="generate_failed_unknown_server">生成失败，未知的服务器错误。</string>
 </resources>

@@ -5,7 +5,7 @@ import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.Response
 
-class Utilities {
+class Utils {
   // 此类存放一些可复用的工具方法
 
   companion object {

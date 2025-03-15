@@ -1,6 +1,5 @@
 package ink.chyk.neuqrcode.activities
 
-import android.app.Activity
 import android.content.*
 import android.os.*
 import androidx.activity.*
@@ -18,7 +17,7 @@ import androidx.compose.ui.unit.*
 import com.tencent.mmkv.*
 import ink.chyk.neuqrcode.ui.theme.*
 import ink.chyk.neuqrcode.R
-import ink.chyk.neuqrcode.Utilities
+import ink.chyk.neuqrcode.Utils
 import kotlinx.coroutines.time.*
 import java.time.*
 
@@ -56,7 +55,7 @@ fun TermsOfServiceScreen(
 
 
   LaunchedEffect(Unit) {
-    if (!Utilities.isDebug(ctx)) {
+    if (!Utils.isDebug(ctx)) {
       while (countdown > 0) {
         delay(
           Duration.ofSeconds(1)

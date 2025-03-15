@@ -10,7 +10,8 @@ import kotlinx.coroutines.flow.*
 
 class ECodeViewModel(
   override val mmkv: MMKV,
-  override val neu: NEUPass
+  override val neu: NEUPass = NEUPass({ false })
+  // 需要使其抛出异常以便显示空白二维码
 ) : BasicViewModel(mmkv, neu) {
   // 具体实现：app 名称，以及几个方法
 
@@ -68,6 +69,7 @@ class ECodeViewModel(
       // 网络问题
       Log.e("ECode", "Failed to refresh ECode: ${e.message}")
       _code.value = ""
+      _loadingState.value = LoadingState.FAILED
     }
   }
 

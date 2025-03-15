@@ -17,8 +17,8 @@ abstract class BasicViewModel(
   // 而不带下划线的是公开的，并且它是 StateFlow，只读，只能接收不能修改
 
   // 是否加载完毕
-  private val _loadComplete = MutableStateFlow(false)
-  val loadComplete: StateFlow<Boolean> = _loadComplete
+  internal val _loadingState = MutableStateFlow(LoadingState.LOADING)
+  val loadingState: StateFlow<LoadingState> = _loadingState
 
 
   // 下面这些都是用来 override 的
@@ -128,12 +128,13 @@ abstract class BasicViewModel(
         }
         action(newSession)
       }
-      _loadComplete.value = true
+      _loadingState.value = LoadingState.SUCCESS
     } catch (e: Exception) {
       // 错误处理逻辑
       Log.e("BasicViewModel", "Error: ${e.message}")
       e.printStackTrace()
-      throw e
+      // throw e
+      _loadingState.value = LoadingState.FAILED
     }
   }
 

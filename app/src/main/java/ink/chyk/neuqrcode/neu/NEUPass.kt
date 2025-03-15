@@ -13,6 +13,7 @@ import kotlin.Pair
 
 class NEUPass(
   val onFailed: () -> Boolean
+  // 返回 true 则不抛出异常，返回 false 则抛出异常
 ) {
   // 智慧东大 API
 
@@ -160,7 +161,7 @@ class NEUPass(
     ).build()
 
     return withContext(Dispatchers.IO) {
-      val res1 = Utilities.executeRequest(client, req1, "failed to get CAS login webpage")
+      val res1 = Utils.executeRequest(client, req1, "failed to get CAS login webpage")
       val html = res1.body?.string() ?: throw RequestFailedException(url)
       val lt = extractLt(html) ?: throw IllegalArgumentException("lt not found")
       val cookies = res1.headers.filter { it.first == "Set-Cookie" }
@@ -185,7 +186,7 @@ class NEUPass(
           .post(sb.toString().toRequestBody("application/x-www-form-urlencoded".toMediaTypeOrNull()))
       ).build()
 
-      val res2 = Utilities.executeRequest(client, req2, "failed to login")
+      val res2 = Utils.executeRequest(client, req2, "failed to login")
 
       if (res2.code == 302) {
         // 从 cookie 中提取 CASTGC
@@ -194,14 +195,14 @@ class NEUPass(
           .firstOrNull { it.startsWith("CASTGC") }
           ?.substringAfter("CASTGC=")
           ?.substringBefore(";")
-          ?: throw TicketFailedException()
+          ?: throw TicketFailedException("ticket 过期")
       } else {
         // 200
         val title = extractTitle(res2.body?.string() ?: "")
         if (title == "智慧东大--统一身份认证") {
           throw PasswordIncorrectException()
         } else {
-          throw TicketFailedException()
+          throw TicketFailedException("ticket 过期")
         }
       }
     }
@@ -234,11 +235,11 @@ class NEUPass(
             // 提取新的 ticket 参数
             location.substringAfter("ticket=")
           } else {
-            throw TicketFailedException()
+            throw TicketFailedException("ticket 过期")
           }
         } else {
           // CASTGC 过期
-          throw TicketFailedException()
+          throw TicketFailedException("ticket 过期")
         }
       }
     }
