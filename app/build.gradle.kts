@@ -27,7 +27,7 @@ fun getGitCommitCount(): Int {
 fun getGitDescribe(): String {
     val out = ByteArrayOutputStream()
     exec {
-        commandLine("git", "describe", "--tags", "--always")
+        commandLine("git", "describe", "--tags", "--always", "--exclude", "beta")
         standardOutput = out
     }
     return out.toString().trim()
@@ -53,6 +53,7 @@ apktransform {
     copy {
         when (it.buildType) {
             "release" -> file("${it.name}/ink.chyk.neuqrcode.${VersionName}.apk")
+            "debug" -> file("${it.name}/ink.chyk.neuqrcode.${VersionName}-debug.apk")
             else -> null
         }
     }
