@@ -45,7 +45,7 @@ webhook.post(config.webhook.endpoint, async (req, res) => {
       return res.send("OK")
     }
     console.log(`New commit in ${body.repository.full_name}`)
-    const message = "✨ 仓库有新的提交：\n" + body.commits.map(commit => `  - ${commit.message}`).join("\n")
+    const message = "✨ " + ${body.ref.replace('refs/heads/', '')} + " 分支有新的提交：\n" + body.commits.map(commit => `  - ${commit.message}`).join("\n")
     await cqhttp("send_group_msg", {
       group_id: config.group_id,
       message: [{
