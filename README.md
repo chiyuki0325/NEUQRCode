@@ -34,8 +34,7 @@
 [Jetpack Compose](https://developer.android.com/compose) 实现软件界面  
 [Zxing](https://github.com/zxing/zxing) 提供生成二维码功能  
 [Fluent UI](https://github.com/microsoft/fluentui) 提供界面图标  
-Logo 使用了 [玖掺零](https://space.bilibili.com/87184323) 绘制的疾旋鼬表情包  
-[5ec1cff](https://github.com/5ec1cff) 和 [purofle](https://github.com/purofle/) 提供技术支持（
+使用了来自 [玖掺零](https://space.bilibili.com/87184323)、[なちょ猫](https://amashiro.com/) 和 [SEGA](https://my-aime.net/) 的美术资源
 
 © 2024 - 2025 斬風千雪 ❄️  
 © 1923 - 2025 东北大学
