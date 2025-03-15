@@ -483,10 +483,17 @@ class NEUPass(
           //Log.d("NEUPass", "Response: $body")
 
           val result: PersonalResponse<T>
+
           try {
             result = Json.decodeFromString<PersonalResponse<T>>(body!!)
-          } catch (e: MissingFieldException) {
-            throw SessionExpiredException()
+          } catch (e: Exception) {
+            if (e is MissingFieldException || e is SerializationException) {
+              // Session 过期
+              Log.d("NEUPass", "Error: ${e.message}")
+              throw SessionExpiredException()
+            } else {
+              throw e
+            }
           }
           if (result.e > 10000) {
             Log.d("NEUPass", "Error: ${result.e}, ${result.m}")
