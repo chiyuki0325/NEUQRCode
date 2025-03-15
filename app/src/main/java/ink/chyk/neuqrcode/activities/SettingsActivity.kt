@@ -18,6 +18,8 @@ import androidx.compose.ui.unit.*
 import com.tencent.mmkv.*
 import ink.chyk.neuqrcode.ui.theme.*
 import ink.chyk.neuqrcode.R
+import ink.chyk.neuqrcode.RowButton
+import ink.chyk.neuqrcode.Utils
 
 class SettingsActivity : ComponentActivity() {
   override fun onCreate(savedInstanceState: Bundle?) {
@@ -105,6 +107,31 @@ fun Settings() {
         mmkv.encode("campus_running_always_dark", campusRunningAlwaysDarkState)
       }
     )
+
+    if (Utils.isDebug(ctx)) {
+      RowButton(
+        R.drawable.ic_fluent_apps_24_filled,
+        "调试 TBS 内核",
+        "debugtbs",
+        clickable = true,
+        onClick = {
+          val intent = Intent(ctx, WebPageActivity::class.java)
+          intent.putExtra("url", "https://debugtbs.qq.com")
+          ctx.startActivity(intent)
+        }
+      )
+      RowButton(
+        R.drawable.ic_fluent_apps_24_filled,
+        "调试 X5 内核",
+        "debugx5",
+        clickable = true,
+        onClick = {
+          val intent = Intent(ctx, WebPageActivity::class.java)
+          intent.putExtra("url", "https://debugx5.qq.com")
+          ctx.startActivity(intent)
+        }
+      )
+    }
   }
 }
 
